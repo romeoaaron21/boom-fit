@@ -4,8 +4,8 @@ stages:
   - test
   - deploy
 variables:
-  AWS_DEFAULT_REGION: us-east-2 # The region of our S3 bucket
-  BUCKET_NAME: trendy.boom.ai         # Your bucket name
+  AWS_DEFAULT_REGION: us-west-1 # The region of our S3 bucket
+  BUCKET_NAME: fit.boom.ai         # Your bucket name
 cache:
   paths:
     - node_modules/
