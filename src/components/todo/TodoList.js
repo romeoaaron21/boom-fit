@@ -9,6 +9,10 @@ function TodoList() {
   const classes = todoStyles();
   const [todoToggle, setTodoToggle] = useState(true);
   const { state } = useContext(TodosContext);
+
+  const [selectedTodo, setSelectedTodo] = useState({})
+
+  const handleSelectedTodo = todo => setSelectedTodo(todo)
   
   return (
     <>
@@ -36,6 +40,8 @@ function TodoList() {
                 <div key={todo.id}>
                 <TodoItem 
                   todo={todo}
+                  handleSelectedTodo={handleSelectedTodo}
+                  selectedTodo={selectedTodo}
                 />
                 </div>
                 :null
