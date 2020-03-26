@@ -10,9 +10,12 @@ import todoStyles from "./todoStyles";
 import Fade from '@material-ui/core/Fade';
 import Tooltip from "@material-ui/core/Tooltip"
 
+import { StateContext } from "../../context/stateContext"
+
 function TodoItem({ todo  }) {
   const classes = todoStyles();
-  const { state, dispatch } = useContext(TodosContext);
+  // const { state, dispatch } = useContext(TodosContext);
+  const { state, dispatch } = useContext(StateContext);
   const [editText, setEditText] = useState("");
 
   const [showOptions, setShowOptions] = useState(false)
@@ -34,7 +37,7 @@ function TodoItem({ todo  }) {
             checked={todo.complete}
             size="small"
             style={{ color: "#fff" }}
-            onChange={() => dispatch({ type: "TOGGLE_TODO", payload: todo })}
+            onChange={() => dispatch({ type: "DONE_TODO", payload: todo })}
           />
           <form onSubmit={e => {
               e.preventDefault()
@@ -84,8 +87,9 @@ function TodoItem({ todo  }) {
           <Checkbox
             checked={todo.complete}
             size="small"
-            style={{ color: state.user.mainFocus===todo.text?"#C786E1":"white" }}
-            onChange={() => dispatch({ type: "TOGGLE_TODO", payload: todo })}
+            style={{color:"white"}}
+            // style={{ color: state.user.mainFocus===todo.text?"#C786E1":"white" }}
+            onChange={() => dispatch({ type: "DONE_TODO", payload: todo })}
           />
           <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
           <Typography
@@ -100,7 +104,7 @@ function TodoItem({ todo  }) {
             {todo.text}
           </Typography>
           <Chip 
-            label={state.tags.map(tag=>tag.tag_id===todo.tag_id?tag.title: null)} 
+            label={state.goals.map(goal=>goal.id===todo.goal_id?goal.title: null)} 
             size="small" 
             color={todo.complete? "default": "primary"}
             style={{
@@ -118,9 +122,12 @@ function TodoItem({ todo  }) {
       <Tooltip title="Set as Main Focus" placement="top">
       <IconButton
           size="small"
-          onClick={() => dispatch({type: "SET_MAIN_FOCUS", main_focus: todo.text})}
+          // onClick={() => dispatch({type: "SET_MAIN_FOCUS", main_focus: todo.text})}
         >
-          <CenterFocusStrongIcon style={{ fontSize: "1vw", color: state.user.mainFocus===todo.text?"#C786E1":"white" }} />
+          <CenterFocusStrongIcon style={{ fontSize: "1vw", 
+          // color: state.user.mainFocus===todo.text?"#C786E1":"white" 
+          color:"white"
+          }} />
         </IconButton>
         </Tooltip>
         <Tooltip title="Edit" placement="top">

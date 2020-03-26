@@ -3,9 +3,11 @@ import TextField from "@material-ui/core/TextField"
 import goalsStyles from "./goalsStyles"
 import TodosContext from "../../context"
 
+import { StateContext } from "../../context/stateContext"
 
 function GoalForm() {
-const { dispatch } = useContext(TodosContext);
+// const { dispatch } = useContext(TodosContext);
+const {state, dispatch} = useContext(StateContext)
 const [goal, setGoal] = useState("");
 const classes = goalsStyles();
 

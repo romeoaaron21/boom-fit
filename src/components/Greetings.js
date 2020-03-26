@@ -1,10 +1,11 @@
 import Fade from "@material-ui/core/Fade";
 import React, { useContext } from 'react';
-import BoomFitContext from "../context";
+// import BoomFitContext from "../context";
 
+import { StateContext } from "../context/stateContext"
 
 function Greetings() {
-    const { state } = useContext(BoomFitContext);
+    const { state } = useContext(StateContext);
     const name = state.user.name
     return (
         <Fade in={true}

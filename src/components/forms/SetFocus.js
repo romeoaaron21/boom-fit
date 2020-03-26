@@ -4,9 +4,11 @@ import TextField from "@material-ui/core/TextField"
 import useStyles from "../../styles"
 import BoomFitContext from "../../context"
 
+import { StateContext } from "../../context/stateContext"
+
 function SetFocus() {
     const classes = useStyles()
-    const {state, dispatch} = useContext(BoomFitContext)
+    const {state, dispatch} = useContext(StateContext)
     const [mainFocus, setMainFocus] = useState("")
 
     const handleMainFocusSubmit = e => {
@@ -15,8 +17,9 @@ function SetFocus() {
     }
 
     useEffect(() => {
-      setMainFocus(state.user.prevMainFocus)
-    }, [state.user.prevMainFocus])
+      setMainFocus(state.user.prevFocus)
+    }, [state.user.prevFocus])
+    
     return (  
         <Fade in={true}
         {...({ timeout: 1500 })}

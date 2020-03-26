@@ -4,8 +4,11 @@ import todoStyles from "./todoStyles";
 import TodosContext from "../../context";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import { StateContext } from "../../context/stateContext"
+
 function TodoForm() {
-  const { state, dispatch } = useContext(TodosContext);
+  // const { state, dispatch } = useContext(TodosContext);
+  const { state, dispatch } = useContext(StateContext);
   const [todo, setTodo] = useState("");
   const classes = todoStyles();
   const [selectedTag, setSelectedTag] = useState(1)
@@ -79,9 +82,9 @@ function TodoForm() {
           value={selectedTag}
           onChange={e=>setSelectedTag(e.target.value)}
         >
-          {state.tags.map(tag => (
-            <MenuItem key={tag.id} value={tag.tag_id}>
-              {tag.title}
+          {state.goals.map(goal => (
+            <MenuItem key={goal.id} value={goal.id}>
+              {goal.title}
             </MenuItem>
           ))}
         </TextField>

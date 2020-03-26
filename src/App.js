@@ -1,23 +1,22 @@
-import { Container, Typography } from "@material-ui/core";
-import React, { useContext, useReducer } from "react";
+import { Container } from "@material-ui/core";
+import React from "react";
 import "./App.css";
-import SetFocus from "./components/forms/SetFocus";
-import SetName from "./components/forms/SetName";
+
 import Greetings from "./components/Greetings";
-import LocalTime from "./components/LocalTime";
-import MainFocus from "./components/MainFocus";
+
 import TodoList from "./components/todo/TodoList";
 import GoalList from "./components/goals/GoalList"
 import BoomFitContext from "./context";
 import todosReducer from "./reducer";
 
+import StateProvider, { StateContext } from "./context/stateContext";
+
+import BoomFitDashboard from "./components/BoomFitDashboard";
 
 function App() {
-  const initialState = useContext(BoomFitContext);
-  const [state, dispatch] = useReducer(todosReducer, initialState);
 
   return (
-    <BoomFitContext.Provider value={{ state, dispatch }}>
+    <StateProvider>
       <div className="App">
         <header
           className="App-header"
@@ -28,25 +27,13 @@ function App() {
           }}
         >
           <Container maxWidth="lg">
-            <LocalTime />
-            {state.user.name ? (
-              <>
-                <Greetings />
-                {state.user.mainFocus ? <MainFocus /> : <SetFocus />}
-              </>
-            ) : (
-              <SetName />
-            )}
-
-            <Typography variant="overline">
-              "All will be alright in time"
-            </Typography>
+            <BoomFitDashboard />
           </Container>
           <GoalList />
           <TodoList />
         </header>
       </div>
-    </BoomFitContext.Provider>
+    </StateProvider>
   );
 }
 

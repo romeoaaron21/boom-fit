@@ -15,9 +15,12 @@ import React, { useContext, useState } from "react";
 import TodosContext from "../../context";
 import goalsStyles from "./goalsStyles";
 
-function GoalItem({ tags }) {
+import { StateContext } from "../../context/stateContext"
+
+function GoalItem({ goal }) {
   const classes = goalsStyles();
-  const { state, dispatch } = useContext(TodosContext);
+  // const { state, dispatch } = useContext(TodosContext);
+  const {state, dispatch} = useContext(StateContext)
   const [editText, setEditText] = useState("");
 
   const [showOptions, setShowOptions] = useState(false);
@@ -40,7 +43,7 @@ function GoalItem({ tags }) {
           onMouseEnter={() => setShowOptions(true)}
           onMouseLeave={() => setShowOptions(false)}
         >
-          {state.currentGoal.id === tags.id ? (
+          {state.currentGoal.id === goal.id ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <IconButton
                 size="small"
@@ -54,7 +57,7 @@ function GoalItem({ tags }) {
                   e.preventDefault();
                   dispatch({
                     type: "UPDATE_GOAL",
-                    payload: tags,
+                    payload: goal,
                     title: editText
                   });
                 }}
@@ -70,7 +73,7 @@ function GoalItem({ tags }) {
                   onBlur={e =>
                     dispatch({
                       type: "UPDATE_GOAL",
-                      payload: tags,
+                      payload: goal,
                       title: e.target.value
                     })
                   }
@@ -113,8 +116,8 @@ function GoalItem({ tags }) {
                   fontWeight: "800"
                 }}
               >
-                {tags.title} (
-                {state.todos.filter(todo => tags.tag_id === todo.tag_id).length}
+                {goal.title} (
+                {state.todos.filter(todo => goal.id === todo.goal_id).length}
                 )
               </Typography>
             </div>
@@ -127,7 +130,7 @@ function GoalItem({ tags }) {
                   <IconButton
                     size="small"
                     onClick={() =>
-                      dispatch({ type: "CURRENT_GOAL", payload: tags })
+                      dispatch({ type: "CURRENT_GOAL", payload: goal })
                     }
                   >
                     <EditIcon style={{ fontSize: "1vw", color: "white" }} />
@@ -137,7 +140,7 @@ function GoalItem({ tags }) {
                   <IconButton
                     size="small"
                     onClick={() =>
-                      dispatch({ type: "REMOVE_GOAL", payload: tags })
+                      dispatch({ type: "REMOVE_GOAL", payload: goal })
                     }
                   >
                     <DeleteIcon style={{ fontSize: "1vw", color: "white" }} />
@@ -152,7 +155,7 @@ function GoalItem({ tags }) {
       <Collapse in={showTodo} transition="auto">
         {showTodo
           ? state.todos.map(todo =>
-              todo.tag_id === tags.tag_id ? (
+              todo.goal_id === goal.id ? (
                 <div key={todo.id}>
                   <div
                     style={{

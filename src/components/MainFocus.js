@@ -3,11 +3,14 @@ import Fade from "@material-ui/core/Fade";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import BoomFitContext from "../context";
+
+import { StateContext } from "../context/stateContext"
+
 function MainFocus() {
-  const { state, dispatch } = useContext(BoomFitContext);
-  const prevFocusHandler = localStorage.getItem("main_focus")
+  const { state, dispatch } = useContext(StateContext);
+
   const handleEditFocus = () =>(
-    dispatch({type: "SET_MAIN_FOCUS", main_focus: "", prev_focus: prevFocusHandler})
+    dispatch({type: "SET_MAIN_FOCUS", main_focus: "", prev_focus:state.user.mainFocus})
   )
 
   return (

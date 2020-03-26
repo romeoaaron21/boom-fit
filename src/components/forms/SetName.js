@@ -2,9 +2,12 @@ import React, {useContext, useState} from 'react'
 import TextField from "@material-ui/core/TextField"
 import useStyles from "../../styles"
 import BoomFitContext from "../../context"
+
+import { StateContext } from "../../context/stateContext"
+
 function SetName() {
     const classes = useStyles() 
-    const {dispatch} = useContext(BoomFitContext)
+    const {dispatch} = useContext(StateContext)
     const [name, setName] = useState("")
 
     const handleSubmit = e => {

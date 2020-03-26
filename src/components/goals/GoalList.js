@@ -5,10 +5,13 @@ import goalsStyles from "./goalsStyles";
 import GoalItem from "./GoalItem"
 import GoalForm from "./GoalForm"
 
+import { StateContext } from "../../context/stateContext"
+
 function GoalList() {
   const classes = goalsStyles();
   const [goalsToggle, setGoalsToggle] = useState(true);
-  const { state } = useContext(TodosContext);
+  // const { state } = useContext(TodosContext);
+  const {state} = useContext(StateContext)
   return (
     <>
       <div style={{ position: "absolute", left: 30, top: 15 }}>
@@ -28,10 +31,10 @@ function GoalList() {
                 overflowY: "auto",
                 padding: 0
             }}>
-            {state.tags.length?
-              state.tags.map(tags =>(
-                <div key={tags.id}>
-                   <GoalItem tags={tags} />
+            {state.goals.length?
+              state.goals.map(goal =>(
+                <div key={goal.id}>
+                   <GoalItem goal={goal} />
                 </div>
               ))
               :null
