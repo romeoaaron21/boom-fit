@@ -11,11 +11,14 @@ import Fade from '@material-ui/core/Fade';
 import Tooltip from "@material-ui/core/Tooltip"
 
 import { StateContext } from "../../context/stateContext"
+import { TaskGoalState } from "../../context/taskGoalContext"
 
 function TodoItem({ todo  }) {
   const classes = todoStyles();
   // const { state, dispatch } = useContext(TodosContext);
   const { state, dispatch } = useContext(StateContext);
+  const { taskGoalState, taskGoalDispatch } = useContext(TaskGoalState)
+
   const [editText, setEditText] = useState("");
 
   const [showOptions, setShowOptions] = useState(false)
@@ -31,7 +34,7 @@ function TodoItem({ todo  }) {
       onMouseLeave={()=>setShowOptions(false)}
       
     >
-      {state.currentTodo.id === todo.id ? (
+      {taskGoalState.currentTodo.id === todo.id ? (
         <div className={classes.todoItemContainer}>
           <Checkbox
             checked={todo.complete}
@@ -42,6 +45,7 @@ function TodoItem({ todo  }) {
           <form onSubmit={e => {
               e.preventDefault()
               dispatch({ type: "UPDATE_TODO", payload: todo, text: editText });
+              taskGoalDispatch({ type: "UPDATE_TODO" });
               }}>
             <TextField
               variant="outlined"
@@ -52,14 +56,12 @@ function TodoItem({ todo  }) {
                 color: "#3C4148"
               }}
               onChange={e => setEditText(e.target.value)}
-              onBlur={e =>
-                dispatch({
-                  type: "UPDATE_TODO",
-                  payload: todo,
-                  text: e.target.value
-                })
+              onBlur={e => {
+                dispatch({ type: "UPDATE_TODO", payload: todo, text: e.target.value })
+                taskGoalDispatch({ type: "UPDATE_TODO" })
               }
-              defaultValue={state.currentTodo.text}
+              }
+              defaultValue={taskGoalState.currentTodo.text}
               InputProps={{
                 inputAdornedEnd: classes.cssLabel,
                 classes: {
@@ -93,7 +95,7 @@ function TodoItem({ todo  }) {
           />
           <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
           <Typography
-            onClick={() => dispatch({ type: "CURRENT_TODO", payload: todo })}
+            onClick={() => taskGoalDispatch({ type: "CURRENT_TODO", payload: todo })}
             variant="subtitle2"
             style={{ 
               textDecoration: todo.complete ? "line-through" : "none",
@@ -133,7 +135,7 @@ function TodoItem({ todo  }) {
         <Tooltip title="Edit" placement="top">
         <IconButton
           size="small"
-          onClick={() => dispatch({ type: "CURRENT_TODO", payload: todo })}
+          onClick={() => taskGoalDispatch({ type: "CURRENT_TODO", payload: todo })}
         >
           <EditIcon style={{ fontSize: "1vw", color: "white" }} />
         </IconButton>

@@ -80,12 +80,6 @@ export default function reducer(state, action) {
             );
             return { ...state, todos: toggleTodos };
 
-        case "CURRENT_TODO":
-            return {
-                ...state,
-                currentTodo: action.payload
-            };
-
         case "UPDATE_TODO":
             const updateTodos = state.todos.map(t =>
                 t.id === action.payload.id
@@ -93,7 +87,7 @@ export default function reducer(state, action) {
                     : t
             );
             return {
-                ...state, todos: updateTodos, currentTodo: {}
+                ...state, todos: updateTodos
             };
 
         case "REMOVE_TODO":
@@ -128,11 +122,6 @@ export default function reducer(state, action) {
                 ...state, goals: addedGoal
             };
 
-        case "CURRENT_GOAL":
-            return {
-                ...state,
-                currentGoal: action.payload
-            };
 
         case "UPDATE_GOAL":
             const updateGoals = state.goals.map(g =>
@@ -142,7 +131,7 @@ export default function reducer(state, action) {
             )
 
             return {
-                ...state, goals: updateGoals, currentGoal: {}
+                ...state, goals: updateGoals
             };
 
         case "REMOVE_GOAL":

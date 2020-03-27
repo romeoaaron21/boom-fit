@@ -8,6 +8,9 @@ import todoStyles from "./todoStyles";
 import moment from "moment-timezone"
 
 import { StateContext } from "../../context/stateContext"
+import TaskGoalProvider from "../../context/taskGoalContext"
+
+
 
 function TodoList() {
   const classes = todoStyles();
@@ -61,9 +64,9 @@ function TodoList() {
                   state.todos.map(todo => (
                     (!todo.complete) || (todo.complete && todo.time >= +new Date().setUTCHours(0, 0, 0, 0)) ?
                       <div key={todo.id}>
-                        <TodoItem
-                          todo={todo}
-                        />
+                        <TaskGoalProvider >
+                          <TodoItem todo={todo} />
+                        </TaskGoalProvider>
                       </div>
                       :
                       null

@@ -15,17 +15,20 @@ import React, { useContext, useState } from "react";
 import TodosContext from "../../context";
 import goalsStyles from "./goalsStyles";
 
-import { StateContext } from "../../context/stateContext"
+import { StateContext } from "../../context/stateContext";
+import { TaskGoalState } from "../../context/taskGoalContext"
 
 function GoalItem({ goal }) {
   const classes = goalsStyles();
   // const { state, dispatch } = useContext(TodosContext);
-  const {state, dispatch} = useContext(StateContext)
+  const { state, dispatch } = useContext(StateContext);
+  const { taskGoalState, taskGoalDispatch } = useContext(TaskGoalState);
+
   const [editText, setEditText] = useState("");
 
   const [showOptions, setShowOptions] = useState(false);
   const [showTodo, setShowTodo] = useState(true);
-  
+
   return (
     <div>
       <div
@@ -43,7 +46,7 @@ function GoalItem({ goal }) {
           onMouseEnter={() => setShowOptions(true)}
           onMouseLeave={() => setShowOptions(false)}
         >
-          {state.currentGoal.id === goal.id ? (
+          {taskGoalState.currentGoal.id === goal.id ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <IconButton
                 size="small"
@@ -55,11 +58,8 @@ function GoalItem({ goal }) {
               <form
                 onSubmit={e => {
                   e.preventDefault();
-                  dispatch({
-                    type: "UPDATE_GOAL",
-                    payload: goal,
-                    title: editText
-                  });
+                  dispatch({ type: "UPDATE_GOAL", payload: goal, title: editText });
+                  taskGoalDispatch({ type: "UPDATE_GOAL" });
                 }}
               >
                 <TextField
@@ -70,14 +70,11 @@ function GoalItem({ goal }) {
                     color: "#3C4148"
                   }}
                   onChange={e => setEditText(e.target.value)}
-                  onBlur={e =>
-                    dispatch({
-                      type: "UPDATE_GOAL",
-                      payload: goal,
-                      title: e.target.value
-                    })
-                  }
-                  defaultValue={state.currentGoal.title}
+                  onBlur={e => {
+                    dispatch({ type: "UPDATE_GOAL", payload: goal, title: e.target.value })
+                    taskGoalDispatch({ type: "UPDATE_GOAL" });
+                  }}
+                  defaultValue={taskGoalState.currentGoal.title}
                   InputProps={{
                     inputAdornedEnd: classes.cssLabel,
                     classes: {
@@ -101,27 +98,27 @@ function GoalItem({ goal }) {
               </form>
             </div>
           ) : (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                size="small"
-                color="secondary"
-                onClick={() => setShowTodo(!showTodo)}
-              >
-                {showTodo ? <ExpandMoreIcon /> : <ChevronRightIcon />}
-              </IconButton>
-              <Typography
-                variant="overline"
-                style={{
-                  color: "white",
-                  fontWeight: "800"
-                }}
-              >
-                {goal.title} (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  size="small"
+                  color="secondary"
+                  onClick={() => setShowTodo(!showTodo)}
+                >
+                  {showTodo ? <ExpandMoreIcon /> : <ChevronRightIcon />}
+                </IconButton>
+                <Typography
+                  variant="overline"
+                  style={{
+                    color: "white",
+                    fontWeight: "800"
+                  }}
+                >
+                  {goal.title} (
                 {state.todos.filter(todo => goal.id === todo.goal_id).length}
                 )
               </Typography>
-            </div>
-          )}
+              </div>
+            )}
 
           {showOptions ? (
             <Fade in={showOptions} timeout={100}>
@@ -129,8 +126,10 @@ function GoalItem({ goal }) {
                 <Tooltip title="Edit" placement="top">
                   <IconButton
                     size="small"
-                    onClick={() =>
+                    onClick={() => {
                       dispatch({ type: "CURRENT_GOAL", payload: goal })
+                      taskGoalDispatch({ type: "CURRENT_GOAL", payload: goal })
+                    }
                     }
                   >
                     <EditIcon style={{ fontSize: "1vw", color: "white" }} />
@@ -155,49 +154,49 @@ function GoalItem({ goal }) {
       <Collapse in={showTodo} transition="auto">
         {showTodo
           ? state.todos.map(todo =>
-              todo.goal_id === goal.id ? (
-                <div key={todo.id}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "5px 0px"
-                    }}
-                  >
-                    <div className={classes.goalItemContainer}>
-                      <Typography
-                        variant="subtitle2"
-                        style={{
-                          color: "white",
-                          paddingLeft: 10,
-                          display: "flex",
-                          alignItems: "center",
-                          textDecoration: todo.complete
-                            ? "line-through"
-                            : "none"
-                        }}
-                      >
-                        {todo.complete ? (
-                          <CheckCircleIcon
-                            color="secondary"
-                            style={{ fontSize: 15, marginRight: 5 }}
-                          />
-                        ) : (
+            todo.goal_id === goal.id ? (
+              <div key={todo.id}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "5px 0px"
+                  }}
+                >
+                  <div className={classes.goalItemContainer}>
+                    <Typography
+                      variant="subtitle2"
+                      style={{
+                        color: "white",
+                        paddingLeft: 10,
+                        display: "flex",
+                        alignItems: "center",
+                        textDecoration: todo.complete
+                          ? "line-through"
+                          : "none"
+                      }}
+                    >
+                      {todo.complete ? (
+                        <CheckCircleIcon
+                          color="secondary"
+                          style={{ fontSize: 15, marginRight: 5 }}
+                        />
+                      ) : (
                           <RadioButtonCheckedIcon
                             color="default"
                             style={{ fontSize: 15, marginRight: 5 }}
                           />
                         )}
 
-                        {todo.text}
-                      </Typography>
-                    </div>
+                      {todo.text}
+                    </Typography>
                   </div>
-                  <Divider />
                 </div>
-              ) : null
-            )
+                <Divider />
+              </div>
+            ) : null
+          )
           : null}
       </Collapse>
     </div>

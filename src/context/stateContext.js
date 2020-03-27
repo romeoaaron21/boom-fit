@@ -23,7 +23,6 @@ let initialTodosContext = {
         {id:"2", title:"Goal 2"},
         {id:"3", title:"Goal 3"},
     ],
-    currentTodo:{},
     currentGoal:{},
     
 }

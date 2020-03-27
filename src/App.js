@@ -2,7 +2,7 @@ import { Container } from "@material-ui/core";
 import React from "react";
 import "./App.css";
 
-import Greetings from "./components/Greetings";
+
 
 import TodoList from "./components/todo/TodoList";
 import GoalList from "./components/goals/GoalList"
