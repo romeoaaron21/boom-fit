@@ -124,7 +124,7 @@ function TodoItem({ todo  }) {
       <Tooltip title="Set as Main Focus" placement="top">
       <IconButton
           size="small"
-          // onClick={() => dispatch({type: "SET_MAIN_FOCUS", main_focus: todo.text})}
+          onClick={() => dispatch({type: "SET_MAIN_FOCUS", main_focus: todo.text})}
         >
           <CenterFocusStrongIcon style={{ fontSize: "1vw", 
           // color: state.user.mainFocus===todo.text?"#C786E1":"white" 
