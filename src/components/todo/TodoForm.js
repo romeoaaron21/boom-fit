@@ -40,13 +40,21 @@ function TodoForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if(selectedGoal.id){
+    if (selectedGoal.id) {
       dispatch({ type: "ADD_TODO", payload: todo, tag: selectedGoal });
     }
-    else{
-      dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
+    else {
+      let checkGoal = state.goals.filter(goal => goal.title === selectedGoal)
+      if (checkGoal.length === 0) {
+        dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
+      }
+      else {
+        console.log("asdasd")
+        dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
+      }
+
     }
-    
+
     setTodo("");
   };
 
@@ -55,6 +63,7 @@ function TodoForm() {
     if (value) {
       if (event.key === "Enter" && !value.id && todo !== "") {
         dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: value });
+        setSelectedGoal("")
         setTodo("");
       }
       // else if (event.key === "Enter" && value.id && todo !== "") {
@@ -170,7 +179,7 @@ function TodoForm() {
                 focused: classes.focused
               }
             }}
-            onChange={e=>setSelectedGoal(e.target.value)}
+            onChange={e => setSelectedGoal(e.target.value)}
           />
         }
       />
