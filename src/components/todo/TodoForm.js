@@ -39,38 +39,31 @@ function TodoForm() {
   const [selectedGoal, setSelectedGoal] = useState("")
 
 
-  //AYUSING ANG LOGIC SA LUNES! Icheck kung existing na palagi bago nag dispatch
   const handleSubmit = e => {
     e.preventDefault();
-    if (selectedGoal.id) {
-      dispatch({ type: "ADD_TODO", payload: todo, tag: selectedGoal });
+    let checkGoal = state.goals.filter(goal => goal.id === selectedGoal || goal.title === selectedGoal);
+
+    if (checkGoal.length) {
+      dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
     }
     else {
-      let checkGoal = state.goals.filter(goal => goal.title === selectedGoal)
-      if (checkGoal.length === 0) {
-        dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
-      }
-      else {
-        dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
-      }
-
+      dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
     }
-
     setTodo("");
   };
 
 
   const handleChange = (event, value) => {
     if (value) {
-      if (event.key === "Enter" && !value.id && todo !== "") {
+      let checkGoal = state.goals.filter(goal => goal.title === selectedGoal);
+      if (!checkGoal.length && event.key === "Enter" && !value.id && todo !== "") {
         dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: value });
-        setSelectedGoal("")
         setTodo("");
       }
-      // else if (event.key === "Enter" && value.id && todo !== "") {
-      //   dispatch({ type: "ADD_TODO", payload: todo, tag: value.id });
-      //   setTodo("");
-      // }
+      else if (checkGoal.length && event.key === "Enter" && !value.id && todo !== "") {
+        dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
+        setTodo("");
+      }
       else {
         setSelectedGoal(value.id)
       }
@@ -157,13 +150,14 @@ function TodoForm() {
 
       {/* <div style={{ width: "40%" }}> */}
       <Autocomplete
+      searchText="asdasdasdasdasdasd"
         popupIcon
         closeIcon
         onChange={handleChange}
         options={state.goals}
         classes={classes1}
         style={{ width: "40%" }}
-        getOptionLabel={option => option.title ? option.title : null}
+        getOptionLabel={option => option.title}
         freeSolo
         renderInput={params =>
           <TextField
