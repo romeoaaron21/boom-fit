@@ -49,7 +49,6 @@ function TodoForm() {
         dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
       }
       else {
-        console.log("asdasd")
         dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
       }
 

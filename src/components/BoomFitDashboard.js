@@ -16,9 +16,9 @@ import TaskGoalProvider from '../context/taskGoalContext';
 
 export default function BoomFitDashboard() {
   const { state } = useContext(StateContext);
-  // window.addEventListener('beforeunload', () => {
-  //   localStorage.setItem("todo_list", JSON.stringify(state));
-  // });
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem("todo_list", JSON.stringify(state));
+  });
 
   return (
     <TaskGoalProvider>
