@@ -40,13 +40,18 @@ function TodoForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch({ type: "ADD_TODO", payload: todo, tag: selectedGoal });
+    if(selectedGoal.id){
+      dispatch({ type: "ADD_TODO", payload: todo, tag: selectedGoal });
+    }
+    else{
+      dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: selectedGoal });
+    }
+    
     setTodo("");
   };
 
 
   const handleChange = (event, value) => {
-    console.log(value)
     if (value) {
       if (event.key === "Enter" && !value.id && todo !== "") {
         dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: value });
@@ -69,7 +74,11 @@ function TodoForm() {
     // <form onSubmit={handleSubmit}>
     <div style={{ display: "flex", alignItems: "center", padding: 5 }}>
       <TextField
-        onKeyUp={(e) => { if (e.key === "Enter" && selectedGoal !== "") { handleSubmit(e) } }}
+        onKeyUp={(e) => {
+          if (e.key === "Enter" && selectedGoal !== "") {
+            handleSubmit(e)
+          }
+        }}
         variant="outlined"
         autoFocus
         size="small"
@@ -161,6 +170,7 @@ function TodoForm() {
                 focused: classes.focused
               }
             }}
+            onChange={e=>setSelectedGoal(e.target.value)}
           />
         }
       />
