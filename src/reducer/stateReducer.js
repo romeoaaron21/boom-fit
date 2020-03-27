@@ -99,6 +99,26 @@ export default function reducer(state, action) {
                 ...state, goals: filteredGoals, todos: filterTodoFromGoals
             }
 
+        case "ADD_TODO_GOAL":
+            const goal_id = uuidv4()
+            const newtodo = {
+                id: uuidv4(),
+                goal_id: goal_id,
+                text: action.payload,
+                complete: false,
+                time: +currentDate
+            };
+            const newgoal = {
+                id: goal_id,
+                title: action.tag
+            }
+            const addedtodo = [...state.todos, newtodo];
+            const addedgoal = [...state.goals, newgoal];
+            return {
+                ...state, todos: addedtodo, goals: addedgoal
+            };
+
+
 
         default:
             return state;
