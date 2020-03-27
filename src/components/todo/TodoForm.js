@@ -55,12 +55,12 @@ function TodoForm() {
 
   const handleChange = (event, value) => {
     if (value) {
-      let checkGoal = state.goals.filter(goal => goal.title === selectedGoal);
+      let checkGoal = state.goals.filter(goal => goal.id === selectedGoal || goal.title === selectedGoal);
       if (!checkGoal.length && event.key === "Enter" && !value.id && todo !== "") {
         dispatch({ type: "ADD_TODO_GOAL", payload: todo, tag: value });
         setTodo("");
       }
-      else if (checkGoal.length && event.key === "Enter" && !value.id && todo !== "") {
+      else if (checkGoal.length && event.key === "Enter" && todo !== "") {
         dispatch({ type: "ADD_TODO", payload: todo, tag: checkGoal[0].id });
         setTodo("");
       }
@@ -150,7 +150,6 @@ function TodoForm() {
 
       {/* <div style={{ width: "40%" }}> */}
       <Autocomplete
-      searchText="asdasdasdasdasdasd"
         popupIcon
         closeIcon
         onChange={handleChange}
@@ -174,6 +173,10 @@ function TodoForm() {
                 focused: classes.focused
               }
             }}
+            onKeyUp={e=>{if(e.key==="Enter"){
+              let event={key:"Enter"}
+              handleChange(event,selectedGoal)
+            }}}
             onChange={e => setSelectedGoal(e.target.value)}
           />
         }
