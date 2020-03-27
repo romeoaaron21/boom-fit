@@ -38,6 +38,8 @@ function TodoForm() {
   const classes = todoStyles();
   const [selectedGoal, setSelectedGoal] = useState("")
 
+
+  //AYUSING ANG LOGIC SA LUNES! Icheck kung existing na palagi bago nag dispatch
   const handleSubmit = e => {
     e.preventDefault();
     if (selectedGoal.id) {
