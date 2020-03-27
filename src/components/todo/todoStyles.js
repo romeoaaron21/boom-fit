@@ -5,18 +5,22 @@ const todoStyles = makeStyles(theme=>({
         position: "absolute",
         right: 30,
         bottom: 55,
-        width: "25vw",
+        width: "425px",
         background: "rgb(39,44,52, 0.6)",
         opacity: 0.5,
         borderRadius: 10,
       },
     todoItemContainer: {
         display: "flex", 
+        maxWidth: "70%",
         alignItems: "center",
         padding: "5px 0px 5px 0px"
     },
     todoActions: {
-      padding: "0px 5px 0 5px"
+      padding: "2px 5px 2px 5px",
+      display: 'flex',
+      alignItems: "center",
+      justifyContent: "center"
     },
 
     cssLabel: {

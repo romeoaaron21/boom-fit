@@ -18,6 +18,9 @@ function TodoList() {
   const { state } = useContext(StateContext);
 
   const [type, setType] = useState(1);
+  const [selectedTodo, setSelectedTodo] = useState({})
+
+  const handleSelectedTodo = todo => setSelectedTodo(todo)
   return (
     <>
       <div style={{ position: "absolute", right: 30, bottom: 15 }}>
@@ -59,7 +62,11 @@ function TodoList() {
                     (!todo.complete) || (todo.complete && todo.time >= +new Date().setUTCHours(0, 0, 0, 0)) ?
                       <div key={todo.id}>
                         <TaskGoalProvider >
-                          <TodoItem todo={todo} />
+                          <TodoItem
+                            todo={todo}
+                            handleSelectedTodo={handleSelectedTodo}
+                            selectedTodo={selectedTodo}
+                          />
                         </TaskGoalProvider>
                       </div>
                       :
@@ -75,6 +82,8 @@ function TodoList() {
                         <div key={todo.id}>
                           <TodoItem
                             todo={todo}
+                            handleSelectedTodo={handleSelectedTodo}
+                            selectedTodo={selectedTodo}
                           />
                         </div>
                         :
