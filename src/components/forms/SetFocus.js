@@ -5,10 +5,12 @@ import useStyles from "../../styles"
 import BoomFitContext from "../../context"
 
 import { StateContext } from "../../context/stateContext"
+import { TaskGoalState } from "../../context/taskGoalContext"
 
 function SetFocus() {
     const classes = useStyles()
-    const {state, dispatch} = useContext(StateContext)
+    const {dispatch} = useContext(StateContext)
+    const {taskGoalState} = useContext(TaskGoalState)
     const [mainFocus, setMainFocus] = useState("")
 
     const handleMainFocusSubmit = e => {
@@ -17,8 +19,8 @@ function SetFocus() {
     }
 
     useEffect(() => {
-      setMainFocus(state.user.prevFocus)
-    }, [state.user.prevFocus])
+      setMainFocus(taskGoalState.prevFocus)
+    }, [taskGoalState.prevFocus])
     
     return (  
         <Fade in={true}

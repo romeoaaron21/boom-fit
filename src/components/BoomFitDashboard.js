@@ -1,5 +1,9 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { Typography } from "@material-ui/core";
+import { Container } from "@material-ui/core";
+
+import TodoList from "./todo/TodoList";
+import GoalList from "./goals/GoalList"
 
 import SetFocus from "./forms/SetFocus";
 import SetName from "./forms/SetName";
@@ -8,25 +12,33 @@ import MainFocus from "./MainFocus";
 import Greetings from "./Greetings";
 
 import { StateContext } from '../context/stateContext';
+import TaskGoalProvider from '../context/taskGoalContext';
 
 export default function BoomFitDashboard() {
-    const {state} = useContext(StateContext)
+  const { state } = useContext(StateContext);
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem("todo_list", JSON.stringify(state));
+  });
 
-    return (
-        <div>
-            <LocalTime />
-            {state.user.name ? (
-              <>
-                <Greetings />
-                {state.user.mainFocus ? <MainFocus /> : <SetFocus />}
-              </>
-            ) : (
-              <SetName />
-            )}
+  return (
+    <TaskGoalProvider>
+      <Container maxWidth="lg">
+        <LocalTime />
+        {state.user.name ? (
+          <>
+            <Greetings />
+            {state.user.mainFocus ? <MainFocus /> : <SetFocus />}
+          </>
+        ) : (
+            <SetName />
+          )}
 
-            <Typography variant="overline">
-              "All will be alright in time"
+        <Typography variant="overline">
+          "All will be alright in time"
             </Typography>
-        </div>
-    )
+      </Container>
+      <GoalList />
+      <TodoList />
+    </TaskGoalProvider>
+  )
 }

@@ -8,7 +8,7 @@ export const TaskGoalState = createContext();
 let initialTaskGoalState = {
     currentTodo:{},
     currentGoal:{},
-    
+    prevFocus:"",
 }
 
 const TaskGoalProvider = ({ children }) => {

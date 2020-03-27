@@ -30,7 +30,13 @@ export default function taskGoalReducer(state, action) {
                 currentGoal: {}
             };
 
+        case "SET_MAIN_FOCUS":
+            return {
+                ...state, prevFocus: action.prev_focus
+            };
+
         default:
             return state;
     }
+
 }

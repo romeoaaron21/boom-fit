@@ -9,22 +9,10 @@ let initialTodosContext = {
     user: {
         name:"",
         mainFocus:"",
-        prevFocus:"",
     },
     loader: true,
-    todos:[
-        { id: uuidv4(), goal_id:"1", text: "send trends in email", complete: true, time:1585080500000},
-        { id: "123", goal_id:"1", text: "Sample 2", complete: false, time:1585180800000},
-        { id: uuidv4(), goal_id:"2", text: "Sample 3", complete: false, time:1585180800000},
-        { id: uuidv4(), goal_id:"3", text: "Sample 4", complete: false, time:1585180800000},
-    ],
-    goals:[
-        {id:"1", title:"Goal 1"},
-        {id:"2", title:"Goal 2"},
-        {id:"3", title:"Goal 3"},
-    ],
-    currentGoal:{},
-    
+    todos:[],
+    goals:[],
 }
 
 const StateProvider = ({ children }) => {

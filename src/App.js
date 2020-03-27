@@ -1,16 +1,8 @@
-import { Container } from "@material-ui/core";
+
 import React from "react";
 import "./App.css";
 
-
-
-import TodoList from "./components/todo/TodoList";
-import GoalList from "./components/goals/GoalList"
-import BoomFitContext from "./context";
-import todosReducer from "./reducer";
-
-import StateProvider, { StateContext } from "./context/stateContext";
-
+import StateProvider from "./context/stateContext";
 import BoomFitDashboard from "./components/BoomFitDashboard";
 
 function App() {
@@ -26,11 +18,7 @@ function App() {
             backgroundSize: "cover"
           }}
         >
-          <Container maxWidth="lg">
-            <BoomFitDashboard />
-          </Container>
-          <GoalList />
-          <TodoList />
+          <BoomFitDashboard />
         </header>
       </div>
     </StateProvider>

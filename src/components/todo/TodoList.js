@@ -15,15 +15,9 @@ import TaskGoalProvider from "../../context/taskGoalContext"
 function TodoList() {
   const classes = todoStyles();
   const [todoToggle, setTodoToggle] = useState(true);
-  const { state, dispatch } = useContext(StateContext);
+  const { state } = useContext(StateContext);
 
   const [type, setType] = useState(1);
-
-
-  console.log(state)
-
-
-
   return (
     <>
       <div style={{ position: "absolute", right: 30, bottom: 15 }}>
